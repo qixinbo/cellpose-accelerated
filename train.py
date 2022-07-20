@@ -27,27 +27,21 @@ def main(config):
 
     # get function handles of loss and metrics
     criterion = getattr(module_loss, config['loss'])
-    metrics = [getattr(module_metric, met) for met in config['metrics']]
+    # metrics = [getattr(module_metric, met) for met in config['metrics']]
 
     # build optimizer, learning rate scheduler. delete every lines containing lr_scheduler for disabling scheduler
     trainable_params = filter(lambda p: p.requires_grad, model.parameters())
     optimizer = config.init_obj('optimizer', torch.optim, trainable_params)
 
     # using torch built-in Scheduler
-    lr_scheduler_fn = getattr(torch.optim.lr_scheduler, config['lr_scheduler']['type'])
-
-    exp_lr_scheduler_fn = partial(
-        lr_scheduler_fn,
-        step_size = TrainerPlaceholderValues.NUM_UPDATE_STEPS_PER_EPOCH * config['lr_scheduler']['args']['step_size'],
-        gamma = config['lr_scheduler']['args']['gamma']
-        )
+    # lr_scheduler_fn = getattr(torch.optim.lr_scheduler, config['lr_scheduler']['type'])
 
     trainer = Trainer(
         model,
         loss_func=criterion,
         optimizer=optimizer,
         callbacks=[
-            *metrics,
+            # *metrics,
             SaveBestModelCallback(save_path = config.save_dir / "best_model.pt"),
             *DEFAULT_CALLBACKS
         ]
@@ -57,7 +51,7 @@ def main(config):
         train_dataset = train_dataset,
         num_epochs = config['trainer']['num_epochs'],
         train_dataloader_kwargs = config['trainer']['train_dataloader_args'],
-        create_scheduler_fn = exp_lr_scheduler_fn
+        # create_scheduler_fn = lr_scheduler_fn
         )
 
 

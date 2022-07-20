@@ -19,7 +19,7 @@ def main(config):
     logger = config.get_logger('train')
 
     # setup datasets
-    train_dataset, eval_dataset = config.init_obj('dataset', module_data)
+    train_dataset = config.init_obj('dataset', module_data)
 
     # build model architecture, then print to console
     model = config.init_obj('arch', module_arch)
@@ -55,10 +55,8 @@ def main(config):
 
     trainer.train(
         train_dataset = train_dataset,
-        eval_dataset = eval_dataset,
         num_epochs = config['trainer']['num_epochs'],
         train_dataloader_kwargs = config['trainer']['train_dataloader_args'],
-        eval_dataloader_kwargs = config['trainer']['eval_dataloader_args'],
         create_scheduler_fn = exp_lr_scheduler_fn
         )
 

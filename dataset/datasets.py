@@ -14,7 +14,7 @@ transform = A.Compose([
     ])
 
 class CellposeDataset(Dataset):
-    def __init__(self, data_dir, chan=0, chan2=0, img_filter='', mask_filter='_masks', look_one_level_down=False):
+    def __init__(self, data_dir, chan=0, chan2=0, img_filter='_img', mask_filter='_mask', look_one_level_down=False):
         self.channels = [chan, chan2]
         self.imf = img_filter
         self.mask_filter = mask_filter
@@ -64,3 +64,8 @@ class CellposeDataset(Dataset):
 
     def __len__(self):
         return len(self.image_names)
+
+# 运行方式：进入上一层文件夹，然后以模块方式运行，即：python -m dataset.datasets
+if __name__ == '__main__':
+    dataset = CellposeDataset(data_dir="./data/", chan=0, chan2=0, img_filter='_img', mask_filter='_mask')
+    print(len(dataset))

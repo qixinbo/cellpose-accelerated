@@ -27,11 +27,8 @@ class CellposeDataset(Dataset):
         self.flow_names = []
 
         self.image_names = io.get_image_files(self.data_dir, self.mask_filter, imf=self.imf, look_one_level_down=look_one_level_down)
-        print("image_names = ", self.image_names)
 
         self.label_names, self.flow_names = io.get_label_files(self.image_names, self.mask_filter, imf=self.imf)
-        print("label_names = ", self.label_names)
-        print("flow_names = ", self.flow_names)
 
     def __getitem__(self, i):
         image = io.imread(self.image_names[i])
@@ -57,9 +54,6 @@ class CellposeDataset(Dataset):
             image = transformed["image"].transpose(2, 0, 1)
             flow = transformed["mask"].transpose(2, 0, 1)
 
-        print("image.shape = ", image.shape)
-        print("flow.shape = ", flow.shape)
-
         return image.astype(np.float32)/255, flow
 
     def __len__(self):
@@ -67,5 +61,14 @@ class CellposeDataset(Dataset):
 
 # 运行方式：进入上一层文件夹，然后以模块方式运行，即：python -m dataset.datasets
 if __name__ == '__main__':
-    dataset = CellposeDataset(data_dir="./data/", chan=0, chan2=0, img_filter='_img', mask_filter='_mask')
+    dataset = CellposeDataset(data_dir="./data/", chan=1, chan2=0, img_filter='_img', mask_filter='_mask')
     print(len(dataset))
+
+    import matplotlib.pyplot as plt
+    img, flow = dataset[0]
+    print("img.shape = ", img.shape)
+    print("flow.shape = ", flow.shape)
+
+    img0 = img[0][:, :, np.newaxis]*255
+    plt.subplot(131).imshow(img0)
+    plt.show()

@@ -92,9 +92,6 @@ def get_label_files(image_names, mask_filter, imf=None):
     else:
         label_names = label_names0
 
-    print("label_names0 = ", label_names0)
-    print("label_names = ", label_names)
-        
     # check for flows
     if os.path.exists(label_names0[0] + '_flows.tif'):
         flow_names = [label_names0[n] + '_flows.tif' for n in range(nimg)]

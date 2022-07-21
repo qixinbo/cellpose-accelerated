@@ -14,7 +14,7 @@
         "type": "CellposeDataset",
         "args":{
             "data_dir": "data/",
-            "chan": 0,
+            "chan": 1,
             "chan2": 0,
             "img_filter": "_img",
             "mask_filter": "_mask",

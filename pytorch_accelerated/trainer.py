@@ -294,7 +294,6 @@ class Trainer:
 
         model_outputs = self.model(xb)
         loss = self.loss_func(model_outputs, yb)
-
         return {
             "loss": loss,
             "model_outputs": model_outputs,

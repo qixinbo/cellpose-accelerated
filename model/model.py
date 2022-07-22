@@ -172,7 +172,7 @@ class CellposeModel(BaseModel):
                 concatenation=False, mkldnn=False,
                 diam_mean=30.):
         super().__init__()
-        self.nbase = [1, 32, 64, 128, 256]
+        self.nbase = [2, 32, 64, 128, 256]
         self.nout = nout
         self.sz = kernel_size
         self.residual_on = residual_on
@@ -192,7 +192,7 @@ class CellposeModel(BaseModel):
     def forward(self, data):
         if self.mkldnn:
             data = data.to_mkldnn()
-        T0    = self.downsample(data)
+        T0 = self.downsample(data)
         if self.mkldnn:
             style = self.make_style(T0[-1].to_dense()) 
         else:
@@ -205,7 +205,8 @@ class CellposeModel(BaseModel):
         if self.mkldnn:
             T0 = T0.to_dense()    
             #T1 = T1.to_dense()    
-        return T0, style0
+        # return T0, style0
+        return T0
 
     def save_model(self, filename):
         torch.save(self.state_dict(), filename)

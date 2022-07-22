@@ -11,13 +11,14 @@
         }
     },
     "dataset": {
-        "type": "CellposeDataset",
+        "type": "createCellposeDataset",
         "args":{
             "data_dir": "data/",
+            "validation_split": 0.1,
             "chan": 1,
             "chan2": 0,
             "img_filter": "_img",
-            "mask_filter": "_mask",
+            "mask_filter": "_masks",
             "look_one_level_down": false
         }
     },
@@ -46,6 +47,11 @@
         "train_dataloader_args": {
            "batch_size": 8, 
            "shuffle": true,
+           "num_workers": 2
+        },
+        "eval_dataloader_args": {
+           "batch_size": 8, 
+           "shuffle": false,
            "num_workers": 2
         }
     }

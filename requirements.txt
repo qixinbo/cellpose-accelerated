@@ -6,3 +6,4 @@ numpy
 pandas
 tqdm
 tensorboard>=1.14
+natsort

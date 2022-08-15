@@ -13,10 +13,11 @@ def main(config):
     logger = config.get_logger('test')
 
     test_dataset = config.init_obj('dataset', module_data)
+    print("test_dataset = ", test_dataset)
 
     # build model architecture
     model = config.init_obj('arch', module_arch)
-    logger.info(model)
+    # logger.info(model)
 
     # get function handles of loss and metrics
     loss = getattr(module_loss, config['loss'])

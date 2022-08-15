@@ -1,5 +1,4 @@
 from torch.utils.data import Dataset, random_split
-from torchvision import datasets, transforms
 import albumentations as A
 
 import cv2
@@ -59,13 +58,15 @@ class CellposeDataset(Dataset):
         return len(self.image_names)
 
 
-def createCellposeDataset(data_dir, validation_split, chan=1, chan2=0, img_filter='_img', mask_filter='_mask', look_one_level_down=False):
+def createCellposeDataset(data_dir, validation_split=None, chan=1, chan2=0, img_filter='_img', mask_filter='_mask', look_one_level_down=False):
     dataset = CellposeDataset(data_dir, chan, chan2, img_filter, mask_filter, look_one_level_down)
-    num_trainset = int((1-validation_split)*len(dataset))
-    num_validset = len(dataset) - num_trainset
-    return random_split(
-        dataset, [num_trainset, num_validset]
-    )
+    if validation_split is not None:
+        num_trainset = int((1-validation_split)*len(dataset))
+        num_validset = len(dataset) - num_trainset
+        return random_split(dataset, [num_trainset, num_validset])
+    else:
+        return dataset
+
 
 # 运行方式：进入上一层文件夹，然后以模块方式运行，即：python -m dataset.datasets
 if __name__ == '__main__':

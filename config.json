@@ -13,7 +13,7 @@
     "dataset": {
         "type": "createCellposeDataset",
         "args":{
-            "data_dir": "data/",
+            "data_dir": "data/train",
             "validation_split": 0.1,
             "chan": 1,
             "chan2": 0,

@@ -1,44 +1,40 @@
 {
-    "name": "Mnist_LeNet",
+    "name": "CellposeUNet",
     "arch": {
-        "type": "MnistModel",
-        "args": {}
+        "type": "CellposeModel",
+        "args": {
+            "nout": 3,
+            "kernel_size": 3,
+            "residual_on": 1,
+            "style_on": 1,
+            "concatenation": 0
+        }
     },
     "dataset": {
-        "type": "MnistTestDataset",
+        "type": "createCellposeDataset",
         "args":{
-            "data_dir": "data/"
+            "data_dir": "data/test",
+            "chan": 1,
+            "chan2": 0,
+            "img_filter": "_img",
+            "mask_filter": "_masks",
+            "look_one_level_down": false
         }
     },
-    "optimizer": {
-        "type": "Adam",
-        "args":{
-            "lr": 0.001,
-            "weight_decay": 0,
-            "amsgrad": true
-        }
-    },
-    "loss": "nll_loss",
+    "loss": "cellpose_loss",
     "metrics": [
-        "accuracy"
+        "iou"
     ],
-    "lr_scheduler": {
-        "type": "StepLR",
-        "args": {
-            "step_size": 50,
-            "gamma": 0.1
-        }
-    },
     "trainer": {
-        "num_epochs": 6,
+        "num_epochs": 20,
         "save_dir": "saved/",
         "train_dataloader_args": {
-           "batch_size": 128, 
+           "batch_size": 8, 
            "shuffle": true,
            "num_workers": 2
         },
         "eval_dataloader_args": {
-           "batch_size": 128, 
+           "batch_size": 1, 
            "shuffle": false,
            "num_workers": 1
         }

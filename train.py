@@ -1,7 +1,6 @@
 import argparse
 import collections
 import torch
-import numpy as np
 from functools import partial
 
 # import data_loader.data_loaders as module_data

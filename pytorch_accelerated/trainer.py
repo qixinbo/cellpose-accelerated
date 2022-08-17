@@ -251,6 +251,18 @@ class Trainer:
 
         self._eval_dl_kwargs = default_eval_dl_kwargs
 
+        print("self._eval_dl_kwargs = ", self._eval_dl_kwargs)
+
+        temp = DataLoader(
+            dataset=self.eval_dataset,
+            collate_fn=self.collate_fn,
+            **self._eval_dl_kwargs,
+        )
+        x, y = next(iter(temp))
+        print("x.size = ", x.size())
+        print("y.size = ", y.size())
+        print("temp = ", len(temp))
+
         return DataLoader(
             dataset=self.eval_dataset,
             collate_fn=self.collate_fn,
@@ -353,6 +365,8 @@ class Trainer:
         """
         with torch.no_grad():
             xb, yb = batch[0], batch[1]
+            print("xb = ", xb)
+            print("yb = ", yb)
             model_outputs = self.model(xb)
             val_loss = self.loss_func(model_outputs, yb)
 
@@ -801,6 +815,8 @@ class Trainer:
             "on_eval_epoch_start",
             self,
         )
+
+
 
         for batch in valid_dl:
             self.callback_handler.call_event(

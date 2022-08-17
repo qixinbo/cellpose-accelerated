@@ -1,6 +1,4 @@
 import argparse
-import torch
-from tqdm import tqdm
 import dataset.datasets as module_data
 import model.loss as module_loss
 import model.metric as module_metric
@@ -39,7 +37,6 @@ def main(config):
 
     trainer.evaluate(
         dataset=test_dataset,
-        per_device_batch_size=64,
     )
 
 

@@ -259,9 +259,6 @@ class Trainer:
             **self._eval_dl_kwargs,
         )
         x, y = next(iter(temp))
-        print("x.size = ", x.size())
-        print("y.size = ", y.size())
-        print("temp = ", len(temp))
 
         return DataLoader(
             dataset=self.eval_dataset,
@@ -365,8 +362,6 @@ class Trainer:
         """
         with torch.no_grad():
             xb, yb = batch[0], batch[1]
-            print("xb = ", xb)
-            print("yb = ", yb)
             model_outputs = self.model(xb)
             val_loss = self.loss_func(model_outputs, yb)
 

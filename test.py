@@ -37,6 +37,7 @@ def main(config):
 
     trainer.evaluate(
         dataset=test_dataset,
+        dataloader_kwargs=config['trainer']['eval_dataloader_args'],
     )
 
 
